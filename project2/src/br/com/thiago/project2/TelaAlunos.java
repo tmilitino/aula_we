@@ -20,9 +20,27 @@ public class TelaAlunos extends HttpServlet{
 	private static final long serialVersionUID = 7323992434405583525L;
 
 	@Override
-	protected void service(HttpServletRequest resp, HttpServletResponse response) throws ServletException, IOException {
-	
-		Alunos alunos = new Alunos();
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                Alunos alunos = new Alunos();
+                double[][] lista_nota = null;
+                String[] lista_aluno = null;
+                
+                for(int q=0; q<6 ;q++){
+                    String name_parm1 = "aluno_"+q;
+                        String aluno_request = request.getParameter(name_parm1);
+                        lista_aluno[q] = aluno_request;
+                    for(int w=0; w<4 ;q++){
+                        String name_parm = "nota_"+q+"_"+w;
+                        String nota_request = request.getParameter(name_parm);
+                        lista_nota[q][w] = Double.parseDouble(nota_request);   
+                        
+                    }
+                }
+                alunos.SetNotas(lista_nota);
+                alunos.SetNomes(lista_aluno);
+                
+                
+		
 		PrintWriter out = response.getWriter(); 
 		DecimalFormat df = new DecimalFormat("0.00");
 		df.setRoundingMode(RoundingMode.HALF_UP);
